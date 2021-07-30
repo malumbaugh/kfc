@@ -1,0 +1,14 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: pi
+spec:
+  template:
+    metadata:
+      name: pi
+    spec:
+      containers:
+      - name: pi
+        image: sa-master-01.vclass.local:443/perl:5.34.0-slim
+        command: ["perl",  "-Mbignum=bpi", "-wle", "print bpi(2000)"]
+      restartPolicy: Never

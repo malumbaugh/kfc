@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    test: liveness
+  name: exec-liveness
+spec:
+  containers:
+  - name: liveness
+    image: sa-master-01.vclass.local:443/busybox:1 
+    args:
+    - /bin/sh
+    - -c
+    - touch /tmp/healthy; sleep infinity
+    livenessProbe:
+      exec:
+        command:
+        - cat
+        - /tmp/healthy
+      initialDelaySeconds: 5
+      periodSeconds: 5

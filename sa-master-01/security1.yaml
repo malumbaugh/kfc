@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: uid-demo
+spec:
+  securityContext:
+    runAsUser: 1000
+    runAsGroup: 3000
+    fsGroup: 2000
+  containers:
+  - name: busybox
+    image: sa-master-01.vclass.local:443/busybox:1
+    command: [ "sh", "-c", "sleep 1h" ]
+    volumeMounts:
+    - name: uid-vol
+      mountPath: /data/demo
+  volumes:
+  - name: uid-vol
+    emptyDir: {}
