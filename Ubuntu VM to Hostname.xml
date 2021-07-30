@@ -1,0 +1,59 @@
+<ConfigRoot>
+  <_type>vim.CustomizationSpecItem</_type>
+  <info>
+    <_type>vim.CustomizationSpecInfo</_type>
+    <changeVersion>1624326067</changeVersion>
+    <description>Set the hostname to the VM name</description>
+    <lastUpdateTime>2021-06-22T01:41:07Z</lastUpdateTime>
+    <name>Ubuntu VM to Hostname</name>
+    <type>Linux</type>
+  </info>
+  <spec>
+    <_type>vim.vm.customization.Specification</_type>
+    <globalIPSettings>
+      <_type>vim.vm.customization.GlobalIPSettings</_type>
+      <dnsServerList>
+        <_length>1</_length>
+        <_type>string[]</_type>
+        <e id="0">172.20.10.10</e>
+      </dnsServerList>
+      <dnsSuffixList>
+        <_length>1</_length>
+        <_type>string[]</_type>
+        <e id="0">vclass.local</e>
+      </dnsSuffixList>
+    </globalIPSettings>
+    <identity>
+      <_type>vim.vm.customization.LinuxPrep</_type>
+      <domain>vclass.local</domain>
+      <hostName>
+        <_type>vim.vm.customization.VirtualMachineNameGenerator</_type>
+      </hostName>
+      <hwClockUTC>true</hwClockUTC>
+      <scriptText/>
+      <timeZone>America/New_York</timeZone>
+    </identity>
+    <nicSettingMap>
+      <_length>1</_length>
+      <_type>vim.vm.customization.AdapterMapping[]</_type>
+      <e id="0">
+        <_type>vim.vm.customization.AdapterMapping</_type>
+        <adapter>
+          <_type>vim.vm.customization.IPSettings</_type>
+          <gateway>
+            <_length>1</_length>
+            <_type>string[]</_type>
+            <e id="0">172.20.10.10</e>
+          </gateway>
+          <ip>
+            <_type>vim.vm.customization.UnknownIpGenerator</_type>
+          </ip>
+          <subnetMask>255.255.255.0</subnetMask>
+        </adapter>
+      </e>
+    </nicSettingMap>
+    <options>
+      <_type>vim.vm.customization.LinuxOptions</_type>
+    </options>
+  </spec>
+</ConfigRoot>

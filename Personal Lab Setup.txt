@@ -1,0 +1,74 @@
+KFC vAPP build instructions
+==================================
+Connect to Teams and copy down files to C:\Materials\Downloads
+	Download Ubuntu 18.04 and copy to Datastore 
+	Download Kubectl and move to windows directory on Student Windows Desktop
+	Download Octant to C:\Materials/Downloads
+	Copy Guest Customization File and Import into vCenter
+	
+
+Turn vCenter Logging Level to warning not info!
+Connect to each host and set logging level to warning via Advanced Settings
+	Filter on level
+	Filter on log
+Login to Loginsight and setup integration to vSphere
+
+Edit MTPutty create connections for below VMs and setup larger font for display
+Edit WinSCP and create connections to VMs listed below
+
+Build VM from Ubuntu Template  2CPUs, 4GB RAM and 16GB HD - pg-SA-Management
+	Username Ubuntu / VMware1!
+	Disable Swap in /etc/fstab
+	Make a template
+
+Connect to DC - DNS server and create
+	172.20.10.31	sa-master-01.vclass.local
+	172.20.10.41	sa-worker-01.vclass.local
+	172.20.10.42	sa-worker-02.vclass.local
+
+
+Deploy 3 VMs from the template using above details.
+	Pay attention to the NIC - seems to be disconnected have to manually connect after reboots
+
+
+sa-master-01
+	Copy sa-master-01 subdirectory files to sa-master-01 /home/ubuntu
+	chmod +x *.sh
+	./vmeduc-k8s-setup-master.sh | tee vmeduc-k8s-setup-master.out
+	Answer questions for Certificate
+		US
+		NC
+		Apex
+		VMware
+		Education
+		sa-master-01.vclass.local
+		Press Enter for email address
+	tar -zxvf gowebapp-alllabs.tar.tz
+
+docker pull busybox:1
+docker tag busybox:1 sa-master-01.vclass.local:443/busybox:1
+docker push sa-master-01.vclass.local:443/busybox:1
+
+docker pull radial/busyboxplus:curl
+docker tag radial/busyboxplus:curl sa-master-01.vclass.local:443/busyboxplus:curl
+docker push sa-master-01.vclass.local:443/busyboxplus:curl
+
+docker pull perl:5.34.0-slim
+docker tag perl:5.34.0-slim sa-master-01.vclass.local:443/perl:5.34.0-slim
+docker push sa-master-01.vclass.local:443/perl:5.34.0-slim
+
+docker pull fluent/fluent-bit:1.6.9
+docker tag fluent/fluent-bit:1.6.9 sa-master-01.vclass.local:443/fluent/fluent-bit:1.6.9
+docker push sa-master-01.vclass.local:443/fluent/fluent-bit:1.6.9
+
+docker pull nginx:1.21
+docker tag nginx:1.21 sa-master-01.vclass.local:443/nginx:1.21
+docker push sa-master-01.vclass.local:443/nginx:1.21
+
+
+
+sa-workers
+	Copy the sa-worker subdirectory files to /home/ubuntu
+	chmod +x *.sh
+	./vmeduc-k8s-setup-worker.sh | tee vmeduc-k8s-setup-worker.out
+
