@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: gowebapp-marc
+  labels:
+    app: gowebapp-mysql
+    tier: marc
+spec:
+  replicas: 1
+  strategy: 
+    type: Recreate
+  selector:
+    matchLabels:
+      app: gowebapp-mysql
+      tier: marc
+  template:
+    metadata:
+      labels:
+        app: gowebapp-mysql
+        tier: marc
+    spec:
+      containers:
+      - name: gowebapp-mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: mypassword
+        image: sa-master-01.vclass.local:443/gowebapp-mysql:v1
+        ports:
+        - containerPort: 3306
+        volumeMounts:
+        - name: mysql-pvc
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: mysql-pvc
+        persistentVolumeClaim:
+          claimName: pvc02

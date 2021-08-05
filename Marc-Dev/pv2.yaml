@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv02
+spec:
+  storageClassName: fast 
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  vsphereVolume:
+    volumePath: SA-Shared-01
+
